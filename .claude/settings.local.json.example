@@ -1,0 +1,9 @@
+settings.local.json{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://agentrouter.org",
+    "ANTHROPIC_AUTH_TOKEN": "",
+    "ANTHROPIC_API_KEY": "",
+    "ANTHROPIC_MODEL": "claude-opus-4-8"
+  },
+  "model": "claude-opus-4-8"
+}
