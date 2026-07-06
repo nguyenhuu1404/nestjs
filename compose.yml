@@ -1,0 +1,87 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: um_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: um_user
+      POSTGRES_PASSWORD: um_password
+      POSTGRES_DB: user_management
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U um_user -d user_management"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: um_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: um_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@local.dev
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: development
+    container_name: um_backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql://um_user:um_password@postgres:5432/user_management?schema=public
+      REDIS_URL: redis://redis:6379
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+      - backend_node_modules:/app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: development
+    container_name: um_frontend
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    depends_on:
+      - backend
+    command: npm run dev
+
+volumes:
+  postgres_data:
+  redis_data:
+  pgadmin_data:
+  backend_node_modules:
+  frontend_node_modules:
