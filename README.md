@@ -26,13 +26,33 @@
    ```
 
 3. Chạy toàn bộ stack:
+
    ```bash
    docker compose up -d --build
    ```
+
+4. Migration & Seed
+
+- Access to container
+
+  ```bash
+  docker-compose exec backend sh
+  ```
+
+- Migration
+
+  ```bash
+  px prisma migrate dev --name [comment version]{snake_case_db_convention}
+  ```
+
+- Seed
+
+  ```bash
+  npx prisma db seed
+  ```
 
 ## Truy cập
 
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:3001
 - pgAdmin: http://localhost:5050 (email: admin@local.dev / mật khẩu: admin)
-- Prisma Studio: `docker compose exec backend npx prisma studio` → http://localhost:5555
