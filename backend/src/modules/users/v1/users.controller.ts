@@ -2,10 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { UsersService } from '../users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
-import { PermissionsGuard } from '../../../common/guards/permissions.guard';
-import { RequirePermissions } from '../../../common/decorators/permissions.decorator';
-import { CurrentUser } from '../../../common/decorators/current-user.decorator';
+import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
+import { PermissionsGuard } from '@common/guards/permissions.guard';
+import { RequirePermissions } from '@common/decorators/permissions.decorator';
+import { CurrentUser } from '@common/decorators/current-user.decorator';
 
 @Controller({ path: 'users', version: '1' })
 @UseGuards(JwtAuthGuard, PermissionsGuard)
