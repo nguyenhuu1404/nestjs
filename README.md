@@ -59,17 +59,45 @@
   npx nest g resource modules/users --no-spec
   ```
 
-- Create module
+- Create manual module
 
-  ```bash
-  npx nest g module modules/users --no-spec
-  ```
+* Module + Service — nằm gốc modules/orders/
 
-- Create service
+```bash
+npx nest g module modules/orders
+npx nest g service modules/orders --no-spec
+```
 
-  ```bash
-  npx nest g service modules/permissions --no-spec
-  ```
+- Controller — tạo thẳng vào v1
+
+```bash
+npx nest g controller modules/orders/v1/orders --no-spec --flat
+```
+
+- DTO — tạo thẳng vào v1/dto/
+
+```bash
+npx nest g class modules/orders/v1/dto/create-order.dto --no-spec --flat
+npx nest g class modules/orders/v1/dto/update-order.dto --no-spec --flat
+```
+
+- Entity — tạo entities
+
+```bash
+npx nest g class entities/order.entity --no-spec --flat
+```
+
+- Mapper — tạo modules/orders/mappers/
+
+```bash
+npx nest g class modules/orders/mappers/order.mapper --no-spec --flat
+```
+
+- Repository — tạo thẳng vào core/repositories/
+
+```bash
+npx nest g class core/repositories/orders.repository --no-spec --flat
+```
 
 ## Truy cập
 
