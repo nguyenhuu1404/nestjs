@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { UserMapper } from './mappers/user.mapper';
 import { CreateUserDto } from './v1/dto/create-user.dto';
 import { UpdateUserDto } from './v1/dto/update-user.dto';
-import { UserEntity } from './entities/user.entity';
+import { UserEntity } from '@entities/user.entity';
 import { UsersRepository } from '@core/repositories/users.repository';
 import { RolesRepository } from '@core/repositories/roles.repository';
 

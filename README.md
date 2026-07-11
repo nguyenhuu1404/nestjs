@@ -51,6 +51,26 @@
   npx prisma db seed
   ```
 
+5. Nest CLI
+
+- Create all module, controller, dto...
+
+  ```bash
+  npx nest g resource modules/users --no-spec
+  ```
+
+- Create module
+
+  ```bash
+  npx nest g module modules/users --no-spec
+  ```
+
+- Create service
+
+  ```bash
+  npx nest g service modules/permissions --no-spec
+  ```
+
 ## Truy cập
 
 - Frontend: http://localhost:3000
