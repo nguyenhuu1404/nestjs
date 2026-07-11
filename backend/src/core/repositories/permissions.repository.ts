@@ -18,4 +18,8 @@ export class PermissionsRepository extends BaseRepository<Permission, any, any> 
   findByModule(module: string) {
     return this.prisma.permission.findMany({ where: { module } });
   }
+
+  findByIds(ids: number[]) {
+    return this.prisma.permission.findMany({ where: { id: { in: ids } } });
+  }
 }
