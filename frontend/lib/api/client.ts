@@ -14,12 +14,31 @@ interface RequestOptions extends RequestInit {
   token?: string;
 }
 
-// Server (container) gọi qua tên service, Client (browser) gọi qua port map ra host
 function resolveBaseUrl(): string {
   const isServer = typeof window === "undefined";
   return isServer
-    ? (process.env.API_URL_INTERNAL ?? "http://backend:3000/api/v1")
+    ? (process.env.API_URL_INTERNAL ?? "http://backend:3001/api/v1")
     : (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api/v1");
+}
+
+// Transform ngược — snake_case (từ backend) -> camelCase (dùng trong code TS)
+function toCamelCase(obj: any): any {
+  if (Array.isArray(obj)) {
+    return obj.map(toCamelCase);
+  }
+  if (obj !== null && typeof obj === "object") {
+    return Object.entries(obj).reduce(
+      (acc, [key, value]) => {
+        const camelKey = key.replace(/_([a-z])/g, (_, letter) =>
+          letter.toUpperCase(),
+        );
+        acc[camelKey] = toCamelCase(value);
+        return acc;
+      },
+      {} as Record<string, any>,
+    );
+  }
+  return obj;
 }
 
 async function request<T>(
@@ -37,7 +56,8 @@ async function request<T>(
     },
   });
 
-  const body: ApiResponse<T> = await res.json();
+  const rawBody: ApiResponse<T> = await res.json();
+  const body = toCamelCase(rawBody); // transform ngay khi nhận response, trước khi trả cho code gọi
 
   if (!res.ok || !body.success) {
     const message = !body.success
