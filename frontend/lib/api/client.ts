@@ -56,6 +56,12 @@ async function request<T>(
     },
   });
 
+  // 204 No Content hoặc body rỗng -> không có gì để parse
+  if (res.status === 204) {
+    if (!res.ok) throw new ApiError(res.status, "Đã có lỗi xảy ra");
+    return undefined as T;
+  }
+
   const rawBody: ApiResponse<T> = await res.json();
   const body = toCamelCase(rawBody); // transform ngay khi nhận response, trước khi trả cho code gọi
 
