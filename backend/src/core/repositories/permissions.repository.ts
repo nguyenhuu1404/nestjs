@@ -22,4 +22,24 @@ export class PermissionsRepository extends BaseRepository<Permission, any, any> 
   findByIds(ids: number[]) {
     return this.prisma.permission.findMany({ where: { id: { in: ids } } });
   }
+
+  async findAllPaginated(params: { page: number; limit: number; name?: string; module?: string }) {
+    const { page, limit, name, module } = params;
+
+    const where: any = {};
+    if (name) where.name = { contains: name, mode: 'insensitive' };
+    if (module) where.module = { contains: module, mode: 'insensitive' };
+
+    const [items, total] = await Promise.all([
+      this.prisma.permission.findMany({
+        where,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.permission.count({ where }),
+    ]);
+
+    return { items, total };
+  }
 }

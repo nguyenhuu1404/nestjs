@@ -2,15 +2,20 @@
 
 import { useState } from "react";
 import { Permission } from "@/types/permission";
+import { PaginationMeta } from "@/types/pagination";
 import { Button } from "@/components/ui/button";
+import { Pagination } from "@/components/ui/pagination";
+import { useQueryParams } from "@/lib/hooks/use-query-params";
 import { deletePermission } from "@/app/admin/(protected)/permissions/actions";
 import { PermissionFormModal } from "./permission-form-modal";
 
-export function PermissionsTable({
-  initialData,
-}: {
+interface Props {
   initialData: Permission[];
-}) {
+  meta: PaginationMeta;
+}
+
+export function PermissionsTable({ initialData, meta }: Props) {
+  const { setParams } = useQueryParams();
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Permission | null>(null);
   const [deletingId, setDeletingId] = useState<number | null>(null);
@@ -19,9 +24,8 @@ export function PermissionsTable({
     setEditing(null);
     setModalOpen(true);
   }
-
-  function openEdit(permission: Permission) {
-    setEditing(permission);
+  function openEdit(p: Permission) {
+    setEditing(p);
     setModalOpen(true);
   }
 
@@ -84,13 +88,15 @@ export function PermissionsTable({
                   colSpan={4}
                   className="px-4 py-8 text-center text-[var(--text-muted)]"
                 >
-                  Chưa có permission nào
+                  Không tìm thấy permission nào
                 </td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
+
+      <Pagination meta={meta} onPageChange={(page) => setParams({ page })} />
 
       {modalOpen && (
         <PermissionFormModal
