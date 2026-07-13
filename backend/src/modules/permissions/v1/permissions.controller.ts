@@ -1,7 +1,7 @@
 // modules/permissions/v1/permissions.controller.ts
 import {
   Controller, Get, Post, Patch, Delete, Body, Param, ParseIntPipe,
-  UseGuards, HttpCode, HttpStatus,
+  UseGuards, HttpCode, HttpStatus, Query,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
 import { PermissionsGuard } from '@common/guards/permissions.guard';
@@ -9,6 +9,7 @@ import { RequirePermissions } from '@common/decorators/permissions.decorator';
 import { PermissionsService } from '../permissions.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
+import { QueryPermissionDto } from './dto/query-permission.dto';
 
 @Controller({ path: 'permissions', version: '1' })
 @UseGuards(JwtAuthGuard, PermissionsGuard)
@@ -17,8 +18,8 @@ export class PermissionsController {
 
   @Get()
   @RequirePermissions('permissions.manage')
-  findAll() {
-    return this.permissionsService.findAll();
+  findAll(@Query() query: QueryPermissionDto) {
+    return this.permissionsService.findAll(query);
   }
 
   @Get(':id')
