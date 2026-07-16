@@ -14,6 +14,7 @@ model User {
   password    String
   name        String?
   isActive    Boolean          @default(true) @map("is_active")
+  media       Media[]
   roles       UserRole[]
   permissions UserPermission[]
   createdAt   DateTime         @default(now()) @map("created_at")
@@ -75,4 +76,22 @@ model UserPermission {
 
   @@id([userId, permissionId])
   @@map("user_permissions")
+}
+
+model Media {
+  id           Int      @id @default(autoincrement())
+  fileName     String   @map("file_name")
+  altText      String?  @map("alt_text")
+  key          String   @unique
+  url          String
+  mimeType     String   @map("mime_type")
+  size         Int
+  width        Int?
+  height       Int?
+  folder       String
+  uploadedById Int      @map("uploaded_by_id")
+  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("media")
 }

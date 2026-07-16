@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { label: "Người dùng", href: "/admin/users" },
   { label: "Vai trò", href: "/admin/roles" },
   { label: "Quyền hạn", href: "/admin/permissions" },
+  { label: "Media", href: "/admin/media" },
 ];
 
 export function Sidebar({ user }: { user: User }) {

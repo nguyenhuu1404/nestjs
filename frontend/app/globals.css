@@ -1,4 +1,31 @@
+/* app/globals.css */
 @import "tailwindcss";
+
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #14161f;
+
+  --color-primary: #5b5fef;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #f1f2f6;
+  --color-secondary-foreground: #14161f;
+
+  --color-muted: #f7f8fa;
+  --color-muted-foreground: #6b7280;
+
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: #e5e7eb;
+  --color-input: #e5e7eb;
+  --color-ring: #5b5fef;
+
+  --color-popover: #ffffff;
+  --color-popover-foreground: #14161f;
+
+  --radius-md: 0.5rem;
+}
 
 :root {
   --bg-sidebar: #14161f;
