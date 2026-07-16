@@ -40,7 +40,7 @@ export function SearchFilter({ fields }: SearchFilterProps) {
       <button
         type="submit"
         disabled={isPending}
-        className="shrink-0 rounded-lg bg-[var(--accent)] text-white text-sm px-4 disabled:opacity-60"
+        className="shrink-0 rounded-lg bg-[var(--accent)] cursor-pointer disabled:cursor-not-allowed text-white text-sm px-4 disabled:opacity-60"
       >
         {isPending ? "..." : "Tìm"}
       </button>

@@ -58,7 +58,7 @@ export function Pagination({
         <button
           onClick={() => onPageChange(meta.page - 1)}
           disabled={meta.page <= 1}
-          className="rounded-lg border border-[var(--border)] px-2.5 py-1.5 text-xs disabled:opacity-40 hover:bg-[var(--bg-content)] transition-colors"
+          className="rounded-lg border cursor-pointer disabled:cursor-not-allowed border-[var(--border)] px-2.5 py-1.5 text-xs disabled:opacity-40 hover:bg-[var(--bg-content)] transition-colors"
         >
           Trước
         </button>
@@ -75,7 +75,7 @@ export function Pagination({
             <button
               key={p}
               onClick={() => onPageChange(p)}
-              className={`min-w-[28px] rounded-lg px-2 py-1.5 text-xs transition-colors ${
+              className={`min-w-[28px] cursor-pointer disabled:cursor-not-allowed rounded-lg px-2 py-1.5 text-xs transition-colors ${
                 p === meta.page
                   ? "bg-[var(--accent)] text-white"
                   : "border border-[var(--border)] hover:bg-[var(--bg-content)]"
@@ -89,7 +89,7 @@ export function Pagination({
         <button
           onClick={() => onPageChange(meta.page + 1)}
           disabled={meta.page >= meta.totalPages}
-          className="rounded-lg border border-[var(--border)] px-2.5 py-1.5 text-xs disabled:opacity-40 hover:bg-[var(--bg-content)] transition-colors"
+          className="rounded-lg border border-[var(--border)] cursor-pointer disabled:cursor-not-allowed px-2.5 py-1.5 text-xs disabled:opacity-40 hover:bg-[var(--bg-content)] transition-colors"
         >
           Sau
         </button>
