@@ -18,10 +18,15 @@
     # ---- production ----
     FROM node:20-alpine AS production
     WORKDIR /app
+
+    RUN npm install -g pm2
+
     ENV NODE_ENV=production
     COPY package*.json ./
     RUN npm install --omit=dev
     COPY --from=build /app/dist ./dist
+    COPY ecosystem.config.js ./
+
     EXPOSE 3001
-    CMD ["node", "dist/main"]
+   CMD ["pm2-runtime", "start", "ecosystem.config.js"]
     
